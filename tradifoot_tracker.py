@@ -942,6 +942,7 @@ def update_calendar_app(db_data, index_path=None):
 
     today_str = datetime.date.today().strftime("%Y-%m-%d")
     all_routes = []
+    seen_route_keys = set()
     route_counter = 1
 
     for p in db_data.get("programs", []):
@@ -981,6 +982,15 @@ def update_calendar_app(db_data, index_path=None):
                 deliv_date = fallback_date
 
             qty = d.get("quantity", 0)
+            store_clean = (d.get("store") or "").strip().upper()
+            if not store_clean or store_clean.startswith("TOTAL"):
+                continue
+
+            # Strict deduplication: same date, same destination, same quantity
+            route_key = (deliv_date, store_clean, qty)
+            if route_key in seen_route_keys:
+                continue
+            seen_route_keys.add(route_key)
 
             # Compute Status
             if deliv_date < today_str:
