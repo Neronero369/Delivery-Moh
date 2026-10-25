@@ -14172,9 +14172,10 @@
     function getUniqueDeliveries(list) {
       const seen = new Set();
       const unique = [];
-      for (const d of list) {
-        const dest = (d.destination || '').trim().toUpperCase();
-        const key = ${dest}_;
+      for (let i = 0; i < list.length; i++) {
+        const d = list[i];
+        const dest = (d.destination || "").trim().toUpperCase();
+        const key = dest + "_" + d.quantity;
         if (!seen.has(key)) {
           seen.add(key);
           unique.push(d);
@@ -14589,6 +14590,12 @@
     // 6. INITIALIZATION
     // ========================================================
     window.addEventListener("DOMContentLoaded", () => {
+      // Auto-select latest active delivery date in the viewed month if selected date has no deliveries
+      const monthPrefix = `${currentViewDate.getFullYear()}-${String(currentViewDate.getMonth() + 1).padStart(2, '0')}`;
+      const activeInMonth = DELIVERY_DATA.filter(d => d.date.startsWith(monthPrefix));
+      if (!DELIVERY_DATA.some(d => d.date === selectedDateStr) && activeInMonth.length > 0) {
+        selectedDateStr = activeInMonth.map(d => d.date).sort().pop();
+      }
       renderCalendar();
       renderDailyManifest();
     });
