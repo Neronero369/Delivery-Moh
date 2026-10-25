@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr" class="h-full bg-slate-950 text-slate-100">
+<html lang="fr" class="h-full bg-[#0b0d11] text-slate-100">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,16 +22,14 @@
       theme: {
         extend: {
           fontFamily: {
-            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            sans: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Text"', '"SF Pro Display"', '"Plus Jakarta Sans"', 'sans-serif'],
           },
           colors: {
-            brand: {
-              50: '#eef2ff',
-              100: '#e0e7ff',
-              400: '#818cf8',
-              500: '#6366f1',
-              600: '#4f46e5',
-              700: '#4338ca',
+            ios: {
+              blue: '#0A84FF',
+              dark: '#16181d',
+              surface: '#1c1f26',
+              border: 'rgba(255, 255, 255, 0.08)'
             }
           }
         }
@@ -40,85 +38,125 @@
   </script>
 
   <style>
-    body { font-family: 'Plus Jakarta Sans', sans-serif; }
-    
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: #090d16; }
-    ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 9999px; }
-    ::-webkit-scrollbar-thumb:hover { background: #334155; }
-    
-    /* Glassmorphism utility */
-    .glass-panel {
-      background: rgba(15, 23, 42, 0.75);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(51, 65, 85, 0.5);
-    }
-    
-    .glass-card {
-      background: rgba(30, 41, 59, 0.45);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(71, 85, 105, 0.35);
-    }
-    
-    .glass-card:hover {
-      background: rgba(30, 41, 59, 0.75);
-      border-color: rgba(99, 102, 241, 0.5);
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Plus Jakarta Sans", "Inter", sans-serif;
+      background-color: #0b0d11;
+      background-image: 
+        radial-gradient(at 10% 10%, rgba(10, 132, 255, 0.08) 0px, transparent 45%),
+        radial-gradient(at 90% 90%, rgba(59, 130, 246, 0.04) 0px, transparent 45%);
     }
 
-    /* Pulse animation for transit */
-    @keyframes pulse-subtle {
+    /* Custom Apple Minimalist Scrollbar */
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.16); border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.3); }
+
+    /* Apple Frosted Glass Panels */
+    .glass-panel {
+      background: rgba(22, 25, 33, 0.72);
+      backdrop-filter: blur(40px) saturate(190%);
+      -webkit-backdrop-filter: blur(40px) saturate(190%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    }
+
+    .glass-card {
+      background: rgba(29, 34, 46, 0.5);
+      backdrop-filter: blur(24px) saturate(170%);
+      -webkit-backdrop-filter: blur(24px) saturate(170%);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .glass-card:hover {
+      background: rgba(38, 44, 60, 0.75);
+      border-color: rgba(10, 132, 255, 0.45);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(10, 132, 255, 0.25);
+      transform: translateY(-1.5px) scale(1.008);
+    }
+
+    /* Transform JS Indigo accents into vibrant Apple iOS System Blue (#0A84FF) */
+    .ring-indigo-500 {
+      --tw-ring-color: #0A84FF !important;
+      border-color: #0A84FF !important;
+      box-shadow: 0 0 0 2px #0A84FF, 0 10px 25px -5px rgba(10, 132, 255, 0.35) !important;
+    }
+    .bg-indigo-600\/25, .bg-indigo-600\/20, .bg-indigo-500\/20 {
+      background-color: rgba(10, 132, 255, 0.16) !important;
+    }
+    .bg-indigo-600 {
+      background-color: #0A84FF !important;
+    }
+    .border-indigo-500\/80, .border-indigo-500\/50, .border-indigo-500\/30, .border-indigo-500\/20 {
+      border-color: rgba(10, 132, 255, 0.4) !important;
+    }
+    .text-indigo-400, .text-indigo-300 {
+      color: #60a5fa !important;
+    }
+    .text-emerald-400 {
+      color: #34d399 !important;
+    }
+    .shadow-indigo-500\/20 {
+      box-shadow: 0 10px 25px -5px rgba(10, 132, 255, 0.3) !important;
+    }
+    .bg-indigo-950\/60 {
+      background-color: rgba(15, 23, 42, 0.6) !important;
+      border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    }
+
+    /* iOS Subtle Pulsing for Transit */
+    @keyframes apple-pulse {
       0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.7; transform: scale(1.08); }
+      50% { opacity: 0.55; transform: scale(1.15); }
     }
     .pulse-transit {
-      animation: pulse-subtle 2s infinite ease-in-out;
+      animation: apple-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
     }
   </style>
 </head>
-<body class="h-full flex flex-col overflow-hidden bg-slate-950 text-slate-200 antialiased selection:bg-indigo-500 selection:text-white">
+<body class="h-full flex flex-col overflow-hidden bg-[#0b0d11] text-slate-100 font-sans antialiased tracking-tight selection:bg-blue-600 selection:text-white">
 
-  <!-- TOP NAVIGATION HEADER -->
-  <header class="glass-panel sticky top-0 z-30 px-6 py-3.5 border-b border-slate-800/80 shrink-0">
+  <!-- TOP NAVIGATION HEADER (macOS Style Bar) -->
+  <header class="glass-panel sticky top-0 z-30 px-6 py-3.5 border-b border-white/[0.08] shrink-0">
     <div class="max-w-7xl mx-auto flex items-center justify-between">
       
       <!-- Brand & Identity -->
       <div class="flex items-center space-x-3.5">
-        <div class="h-10 w-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-cyan-400 flex items-center justify-center text-white shadow-lg shadow-indigo-500/25 ring-1 ring-white/20">
-          <i class="fa-solid fa-truck-fast text-lg"></i>
+        <div class="h-10 w-10 rounded-2xl bg-gradient-to-tr from-blue-600 via-blue-500 to-sky-400 flex items-center justify-center text-white shadow-lg shadow-blue-500/25 ring-1 ring-white/20">
+          <i class="fa-solid fa-truck-fast text-base"></i>
         </div>
         <div>
           <div class="flex items-center gap-2">
-            <h1 class="text-base font-bold text-white tracking-tight">TRADIFOOT LOGISTICS</h1>
-            <span class="px-2 py-0.5 text-[10px] font-semibold tracking-wide uppercase rounded-full bg-indigo-500/15 text-indigo-300 border border-indigo-500/30">
+            <h1 class="text-sm md:text-base font-semibold text-white tracking-tight">TRADIFOOT LOGISTICS</h1>
+            <span class="px-2.5 py-0.5 text-[10px] font-semibold tracking-wide uppercase rounded-full bg-blue-500/15 text-blue-400 border border-blue-500/30">
               Live Dispatch
             </span>
           </div>
-          <p class="text-xs text-slate-400">Programme & Suivi des Tournées de Livraison</p>
+          <p class="text-xs text-slate-400 font-medium">Programme & Suivi des Tournées de Livraison</p>
         </div>
       </div>
 
       <!-- Quick Month Stats & Legend -->
-      <div class="hidden md:flex items-center space-x-6 text-xs">
-        <div class="flex items-center space-x-4 bg-slate-900/80 px-3.5 py-1.5 rounded-xl border border-slate-800">
-          <div class="flex items-center space-x-1.5">
-            <span class="h-2 w-2 rounded-full bg-emerald-400"></span>
-            <span class="text-slate-400">Livré</span>
+      <div class="hidden md:flex items-center space-x-5 text-xs font-medium">
+        <div class="flex items-center space-x-4 bg-white/[0.04] px-4 py-2 rounded-2xl border border-white/[0.08] backdrop-blur-xl">
+          <div class="flex items-center space-x-2">
+            <span class="h-2 w-2 rounded-full bg-emerald-400 shadow-sm shadow-emerald-400/50"></span>
+            <span class="text-slate-300">Livré</span>
           </div>
-          <div class="flex items-center space-x-1.5">
-            <span class="h-2 w-2 rounded-full bg-amber-400"></span>
-            <span class="text-slate-400">En Transit</span>
+          <div class="flex items-center space-x-2">
+            <span class="h-2 w-2 rounded-full bg-amber-400 shadow-sm shadow-amber-400/50 pulse-transit"></span>
+            <span class="text-slate-300">En Transit</span>
           </div>
-          <div class="flex items-center space-x-1.5">
-            <span class="h-2 w-2 rounded-full bg-indigo-400"></span>
-            <span class="text-slate-400">Programmé</span>
+          <div class="flex items-center space-x-2">
+            <span class="h-2 w-2 rounded-full bg-blue-500 shadow-sm shadow-blue-500/50"></span>
+            <span class="text-slate-300">Programmé</span>
           </div>
         </div>
 
-        <button onclick="goToToday()" class="flex items-center space-x-2 bg-indigo-600 hover:bg-indigo-500 text-white font-medium px-3.5 py-1.5 rounded-xl transition shadow-md shadow-indigo-600/20 active:scale-95">
-          <i class="fa-solid fa-calendar-day"></i>
+        <button onclick="goToToday()" class="flex items-center space-x-2 bg-blue-600 hover:bg-blue-500 text-white font-medium px-4 py-2 rounded-2xl transition shadow-lg shadow-blue-600/25 active:scale-95 duration-200">
+          <i class="fa-solid fa-calendar-day text-xs"></i>
           <span>Aujourd'hui</span>
         </button>
       </div>
@@ -132,55 +170,55 @@
     <!-- ========================================== -->
     <!-- LEFT PANEL: THE INTERACTIVE CALENDAR (7 cols) -->
     <!-- ========================================== -->
-    <div class="lg:col-span-7 flex flex-col glass-panel rounded-2xl p-5 border border-slate-800/90 shadow-xl overflow-hidden">
+    <div class="lg:col-span-7 flex flex-col glass-panel rounded-3xl p-6 border border-white/[0.08] shadow-[0_20px_50px_rgba(0,0,0,0.4)] overflow-hidden">
       
       <!-- Calendar Controls Header -->
-      <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-800">
+      <div class="flex items-center justify-between mb-5 pb-4 border-b border-white/[0.08]">
         <div>
-          <h2 id="calendar-month-year" class="text-lg md:text-xl font-bold text-white tracking-tight flex items-center gap-2.5">
+          <h2 id="calendar-month-year" class="text-lg md:text-xl font-semibold text-white tracking-tight flex items-center gap-2.5">
             <!-- Dynamically populated e.g. Octobre 2026 -->
           </h2>
-          <p class="text-xs text-slate-400 mt-0.5">Cliquez sur un jour pour consulter les tournées</p>
+          <p class="text-xs text-slate-400 font-medium mt-1">Sélectionnez une date pour consulter les tournées</p>
         </div>
 
-        <!-- Month Navigation Arrows -->
-        <div class="flex items-center space-x-1.5 bg-slate-900/90 p-1 rounded-xl border border-slate-800">
-          <button onclick="changeMonth(-1)" title="Mois précédent" class="h-8 w-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-800 transition">
+        <!-- Month Navigation Arrows (iOS Segmented Controls) -->
+        <div class="flex items-center space-x-1 bg-white/[0.04] p-1.5 rounded-2xl border border-white/[0.08] backdrop-blur-xl">
+          <button onclick="changeMonth(-1)" title="Mois précédent" class="h-8 w-8 rounded-xl flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/[0.08] transition duration-150">
             <i class="fa-solid fa-chevron-left text-xs"></i>
           </button>
-          <button onclick="goToToday()" class="px-2.5 py-1 text-xs font-semibold text-slate-300 hover:text-white hover:bg-slate-800 rounded-lg transition">
+          <button onclick="goToToday()" class="px-3 py-1.5 text-xs font-semibold text-slate-300 hover:text-white hover:bg-white/[0.08] rounded-xl transition duration-150">
             Ce mois
           </button>
-          <button onclick="changeMonth(1)" title="Mois suivant" class="h-8 w-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-800 transition">
+          <button onclick="changeMonth(1)" title="Mois suivant" class="h-8 w-8 rounded-xl flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/[0.08] transition duration-150">
             <i class="fa-solid fa-chevron-right text-xs"></i>
           </button>
         </div>
       </div>
 
       <!-- Days of Week Header -->
-      <div class="grid grid-cols-7 gap-2 mb-2 text-center text-xs font-bold text-slate-400 uppercase tracking-wider">
+      <div class="grid grid-cols-7 gap-2.5 mb-2.5 text-center text-xs font-semibold text-slate-400 tracking-wider">
         <div class="py-1">Lun</div>
         <div class="py-1">Mar</div>
         <div class="py-1">Mer</div>
         <div class="py-1">Jeu</div>
         <div class="py-1">Ven</div>
-        <div class="py-1 text-indigo-400">Sam</div>
-        <div class="py-1 text-indigo-400">Dim</div>
+        <div class="py-1 text-blue-400">Sam</div>
+        <div class="py-1 text-blue-400">Dim</div>
       </div>
 
       <!-- Calendar Days Grid (Scrollable or Fitted) -->
-      <div id="calendar-days-grid" class="flex-1 grid grid-cols-7 gap-2 overflow-y-auto pr-0.5 select-none">
+      <div id="calendar-days-grid" class="flex-1 grid grid-cols-7 gap-2.5 overflow-y-auto pr-0.5 select-none">
         <!-- Day cells dynamically rendered via JavaScript -->
       </div>
 
       <!-- Monthly Summary Footer -->
-      <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
+      <div class="mt-4 pt-4 border-t border-white/[0.08] flex items-center justify-between text-xs text-slate-400 font-medium">
         <div class="flex items-center space-x-2">
-          <i class="fa-solid fa-boxes-stacked text-indigo-400"></i>
+          <i class="fa-solid fa-boxes-stacked text-blue-400"></i>
           <span>Total ce mois : <strong id="month-total-units" class="text-white font-semibold">0</strong> unités</span>
         </div>
         <div class="flex items-center space-x-2">
-          <i class="fa-solid fa-route text-cyan-400"></i>
+          <i class="fa-solid fa-route text-sky-400"></i>
           <span><strong id="month-total-deliveries" class="text-white font-semibold">0</strong> expéditions</span>
         </div>
       </div>
@@ -190,37 +228,37 @@
     <!-- ========================================== -->
     <!-- RIGHT PANEL: THE DAILY MANIFEST (5 cols)   -->
     <!-- ========================================== -->
-    <div class="lg:col-span-5 flex flex-col glass-panel rounded-2xl border border-slate-800/90 shadow-xl overflow-hidden">
+    <div class="lg:col-span-5 flex flex-col glass-panel rounded-3xl border border-white/[0.08] shadow-[0_20px_50px_rgba(0,0,0,0.4)] overflow-hidden">
       
       <!-- Manifest Header -->
-      <div class="p-5 border-b border-slate-800 bg-slate-900/60 shrink-0">
+      <div class="p-6 border-b border-white/[0.08] bg-white/[0.02] shrink-0">
         <div class="flex items-start justify-between">
           <div>
-            <div class="flex items-center space-x-2 text-xs font-semibold text-indigo-400 uppercase tracking-wider mb-1">
+            <div class="flex items-center space-x-2 text-[11px] font-semibold text-blue-400 uppercase tracking-wider mb-1.5">
               <i class="fa-regular fa-calendar-check"></i>
               <span>Manifeste Quotidien</span>
             </div>
-            <h3 id="manifest-date-title" class="text-lg font-bold text-white tracking-tight">
+            <h3 id="manifest-date-title" class="text-lg font-semibold text-white tracking-tight">
               <!-- Selected Date Formatted -->
             </h3>
           </div>
-          <span id="manifest-count-badge" class="px-2.5 py-1 text-xs font-bold rounded-lg bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+          <span id="manifest-count-badge" class="px-3 py-1 text-xs font-semibold rounded-full bg-blue-500/15 text-blue-300 border border-blue-500/30">
             0 Tournée
           </span>
         </div>
 
-        <!-- Filter tabs by status -->
-        <div class="flex items-center space-x-1.5 mt-3.5 text-xs">
-          <button onclick="setManifestFilter('ALL')" id="filter-all" class="px-3 py-1 rounded-lg font-medium transition bg-indigo-600 text-white shadow-sm">
+        <!-- Filter tabs as iOS Segmented Controls -->
+        <div class="flex items-center space-x-1 mt-4 p-1 rounded-2xl bg-black/40 border border-white/[0.06] text-xs font-medium">
+          <button onclick="setManifestFilter('ALL')" id="filter-all" class="flex-1 py-1.5 rounded-xl font-medium transition duration-200 bg-blue-600 text-white shadow-sm">
             Tous (<span id="count-all">0</span>)
           </button>
-          <button onclick="setManifestFilter('In Transit')" id="filter-transit" class="px-3 py-1 rounded-lg font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-800 transition">
+          <button onclick="setManifestFilter('In Transit')" id="filter-transit" class="flex-1 py-1.5 rounded-xl font-medium text-slate-400 hover:text-slate-200 hover:bg-white/[0.06] transition duration-200">
             En Transit (<span id="count-transit">0</span>)
           </button>
-          <button onclick="setManifestFilter('Delivered')" id="filter-delivered" class="px-3 py-1 rounded-lg font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-800 transition">
+          <button onclick="setManifestFilter('Delivered')" id="filter-delivered" class="flex-1 py-1.5 rounded-xl font-medium text-slate-400 hover:text-slate-200 hover:bg-white/[0.06] transition duration-200">
             Livrés (<span id="count-delivered">0</span>)
           </button>
-          <button onclick="setManifestFilter('Scheduled')" id="filter-scheduled" class="px-3 py-1 rounded-lg font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-800 transition">
+          <button onclick="setManifestFilter('Scheduled')" id="filter-scheduled" class="flex-1 py-1.5 rounded-xl font-medium text-slate-400 hover:text-slate-200 hover:bg-white/[0.06] transition duration-200">
             Prévus (<span id="count-scheduled">0</span>)
           </button>
         </div>
@@ -232,12 +270,12 @@
       </div>
 
       <!-- Manifest Summary Footer -->
-      <div id="manifest-footer" class="p-3.5 border-t border-slate-800/80 bg-slate-900/60 shrink-0 flex items-center justify-between text-xs text-slate-400">
-        <div class="flex items-center gap-1.5">
+      <div id="manifest-footer" class="p-4 border-t border-white/[0.08] bg-white/[0.02] shrink-0 flex items-center justify-between text-xs text-slate-400 font-medium">
+        <div class="flex items-center gap-2">
           <i class="fa-solid fa-cube text-slate-500"></i>
-          <span>Volume cumulé : <strong id="manifest-total-qty" class="text-emerald-400 font-bold">0</strong> paires</span>
+          <span>Volume cumulé : <strong id="manifest-total-qty" class="text-blue-400 font-bold">0</strong> paires</span>
         </div>
-        <div class="text-[11px] text-slate-500">
+        <div class="text-[11px] text-slate-500 font-medium">
           Dépôt Central Hamiz
         </div>
       </div>
@@ -246,28 +284,28 @@
 
   </div>
 
-  <!-- DELIVERY DETAILS MODAL -->
-  <div id="detail-modal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
-    <div class="glass-panel border border-slate-700 rounded-2xl w-full max-w-lg shadow-2xl overflow-hidden transform transition-all">
-      <div class="px-6 py-4 border-b border-slate-800 flex items-center justify-between bg-slate-900/70">
+  <!-- DELIVERY DETAILS MODAL (macOS Sheet Style) -->
+  <div id="detail-modal" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="glass-panel border border-white/[0.12] rounded-3xl w-full max-w-lg shadow-[0_25px_60px_rgba(0,0,0,0.6)] overflow-hidden transform transition-all">
+      <div class="px-6 py-4.5 border-b border-white/[0.08] flex items-center justify-between bg-white/[0.03]">
         <div class="flex items-center space-x-3">
-          <div class="p-2 rounded-xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+          <div class="p-2.5 rounded-2xl bg-blue-500/15 text-blue-400 border border-blue-500/30">
             <i class="fa-solid fa-file-invoice text-base"></i>
           </div>
           <div>
-            <h4 class="text-sm font-bold text-white" id="modal-route-name">Détail de la Tournée</h4>
-            <p class="text-xs text-slate-400" id="modal-route-sub"></p>
+            <h4 class="text-sm font-semibold text-white tracking-tight" id="modal-route-name">Détail de la Tournée</h4>
+            <p class="text-xs text-slate-400 font-medium" id="modal-route-sub"></p>
           </div>
         </div>
-        <button onclick="closeModal()" class="text-slate-400 hover:text-white p-1.5 rounded-lg hover:bg-slate-800 transition">
+        <button onclick="closeModal()" class="text-slate-400 hover:text-white p-2 rounded-xl hover:bg-white/[0.08] transition duration-150">
           <i class="fa-solid fa-xmark text-sm"></i>
         </button>
       </div>
       <div class="p-6 space-y-4 text-xs" id="modal-body">
         <!-- Content injected dynamically -->
       </div>
-      <div class="px-6 py-3.5 border-t border-slate-800 bg-slate-900/50 flex justify-end">
-        <button onclick="closeModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium rounded-xl transition">
+      <div class="px-6 py-4 border-t border-white/[0.08] bg-white/[0.02] flex justify-end">
+        <button onclick="closeModal()" class="px-5 py-2.5 bg-white/[0.08] hover:bg-white/[0.12] text-white font-medium rounded-2xl transition duration-150">
           Fermer
         </button>
       </div>
