@@ -1,0 +1,13 @@
+# Data & raw files
+data/
+all_delivery_programs/
+delivery_september/
+*.xlsx
+*.XLSX
+*.xls
+*.pdf
+*.docx
+*.log
+*.ps1
+__pycache__/
+.vscode/
