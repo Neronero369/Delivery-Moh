@@ -2,7 +2,7 @@
 <html lang="fr" class="h-full bg-[#0b0d11] text-slate-100">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Tradifoot — Programme de Livraison & Calendrier</title>
   
   <!-- Tailwind CSS CDN -->
@@ -59,6 +59,23 @@
       -webkit-backdrop-filter: blur(40px) saturate(190%);
       border: 1px solid rgba(255, 255, 255, 0.08);
       box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    }
+
+    /* Mobile Responsive Optimizations */
+    @media (max-width: 640px) {
+      #calendar-days-grid {
+        gap: 3px !important;
+      }
+      #calendar-days-grid > div {
+        min-height: 48px !important;
+        padding: 4px !important;
+      }
+      /* Prevent horizontal scroll jitter on iOS */
+      html, body {
+        overflow-x: hidden !important;
+        width: 100% !important;
+        -webkit-overflow-scrolling: touch;
+      }
     }
 
     #progress-circle {
@@ -121,26 +138,26 @@
     }
   </style>
 </head>
-<body class="h-full flex flex-col overflow-hidden bg-[#0b0d11] text-slate-100 font-sans antialiased tracking-tight selection:bg-blue-600 selection:text-white">
+<body class="min-h-screen flex flex-col bg-[#0b0d11] text-slate-100 font-sans antialiased tracking-tight selection:bg-blue-600 selection:text-white overflow-x-hidden lg:h-screen lg:overflow-hidden">
 
   <!-- TOP NAVIGATION HEADER (macOS Style Bar) -->
-  <header class="glass-panel sticky top-0 z-30 px-6 py-3.5 border-b border-white/[0.08] shrink-0">
+  <header class="glass-panel sticky top-0 z-30 px-3.5 sm:px-6 py-2.5 sm:py-3.5 border-b border-white/[0.08] shrink-0">
     <div class="max-w-7xl mx-auto flex items-center justify-between">
       
       <!-- Brand & Identity -->
-      <div class="flex items-center space-x-3.5">
-        <div class="h-10 w-10 rounded-2xl bg-gradient-to-tr from-blue-600 via-blue-500 to-sky-400 flex items-center justify-center text-white shadow-lg shadow-blue-500/25 ring-1 ring-white/20">
-          <i class="fa-solid fa-truck-fast text-base"></i>
+      <div class="flex items-center space-x-2.5 sm:space-x-3.5">
+        <div class="h-9 w-9 sm:h-10 sm:w-10 rounded-xl sm:rounded-2xl bg-gradient-to-tr from-blue-600 via-blue-500 to-sky-400 flex items-center justify-center text-white shadow-lg shadow-blue-500/25 ring-1 ring-white/20 shrink-0">
+          <i class="fa-solid fa-truck-fast text-sm sm:text-base"></i>
         </div>
         <div>
           <div class="flex items-center gap-2">
-            <h1 class="text-sm md:text-base font-semibold text-white tracking-tight">TRADIFOOT LOGISTICS</h1>
+            <h1 class="text-xs sm:text-sm md:text-base font-semibold text-white tracking-tight">TRADIFOOT LOGISTICS</h1>
           </div>
-          <p class="text-xs text-slate-400 font-medium">Programme & Suivi des Tournées de Livraison</p>
+          <p class="text-[10px] sm:text-xs text-slate-400 font-medium">Programme & Suivi des Tournées</p>
         </div>
       </div>
 
-      <!-- Quick Month Stats & Legend -->
+      <!-- Quick Month Stats & Legend (Desktop) -->
       <div class="hidden md:flex items-center space-x-5 text-xs font-medium">
         <div class="flex items-center space-x-4 bg-white/[0.04] px-4 py-2 rounded-2xl border border-white/[0.08] backdrop-blur-xl">
           <div class="flex items-center space-x-2">
@@ -163,53 +180,61 @@
         </button>
       </div>
 
+      <!-- Quick Action Mobile (Aujourd'hui) -->
+      <div class="flex md:hidden items-center space-x-2">
+        <button onclick="goToToday()" class="flex items-center space-x-1.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-medium px-3 py-1.5 rounded-xl transition shadow-md shadow-blue-600/25 active:scale-95">
+          <i class="fa-solid fa-calendar-day text-[11px]"></i>
+          <span>Aujourd'hui</span>
+        </button>
+      </div>
+
     </div>
   </header>
 
   <!-- MAIN TWO-COLUMN WORKSPACE -->
-  <div class="flex-1 overflow-hidden max-w-7xl w-full mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+  <div class="flex-1 overflow-y-auto lg:overflow-hidden max-w-7xl w-full mx-auto p-2.5 sm:p-4 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6">
 
     <!-- ========================================== -->
     <!-- LEFT PANEL: THE INTERACTIVE CALENDAR (7 cols) -->
     <!-- ========================================== -->
-    <div class="lg:col-span-7 flex flex-col glass-panel rounded-3xl p-6 border border-white/[0.08] shadow-[0_20px_50px_rgba(0,0,0,0.4)] overflow-hidden">
+    <div class="lg:col-span-7 flex flex-col glass-panel rounded-2xl md:rounded-3xl p-3.5 sm:p-5 md:p-6 border border-white/[0.08] shadow-[0_20px_50px_rgba(0,0,0,0.4)] overflow-hidden">
       
       <!-- Calendar Controls Header -->
-      <div class="flex items-center justify-between mb-5 pb-4 border-b border-white/[0.08]">
+      <div class="flex items-center justify-between mb-3 sm:mb-5 pb-3 sm:pb-4 border-b border-white/[0.08]">
         <div>
-          <h2 id="calendar-month-year" class="text-lg md:text-xl font-semibold text-white tracking-tight flex items-center gap-2.5">
+          <h2 id="calendar-month-year" class="text-base sm:text-lg md:text-xl font-semibold text-white tracking-tight flex items-center gap-2">
             <!-- Dynamically populated e.g. Octobre 2026 -->
           </h2>
-          <p class="text-xs text-slate-400 font-medium mt-1">Sélectionnez une date pour consulter les tournées</p>
+          <p class="text-[11px] sm:text-xs text-slate-400 font-medium mt-0.5 sm:mt-1">Sélectionnez une date pour consulter les tournées</p>
         </div>
 
         <!-- Month Navigation Arrows (iOS Segmented Controls) -->
-        <div class="flex items-center space-x-1 bg-white/[0.04] p-1.5 rounded-2xl border border-white/[0.08] backdrop-blur-xl">
-          <button onclick="changeMonth(-1)" title="Mois précédent" class="h-8 w-8 rounded-xl flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/[0.08] transition duration-150">
-            <i class="fa-solid fa-chevron-left text-xs"></i>
+        <div class="flex items-center space-x-1 bg-white/[0.04] p-1 sm:p-1.5 rounded-xl sm:rounded-2xl border border-white/[0.08] backdrop-blur-xl shrink-0">
+          <button onclick="changeMonth(-1)" title="Mois précédent" class="h-7 w-7 sm:h-8 sm:w-8 rounded-lg sm:rounded-xl flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/[0.08] transition duration-150">
+            <i class="fa-solid fa-chevron-left text-[11px] sm:text-xs"></i>
           </button>
-          <button onclick="goToToday()" class="px-3 py-1.5 text-xs font-semibold text-slate-300 hover:text-white hover:bg-white/[0.08] rounded-xl transition duration-150">
+          <button onclick="goToToday()" class="px-2 sm:px-3 py-1 sm:py-1.5 text-[11px] sm:text-xs font-semibold text-slate-300 hover:text-white hover:bg-white/[0.08] rounded-lg sm:rounded-xl transition duration-150">
             Ce mois
           </button>
-          <button onclick="changeMonth(1)" title="Mois suivant" class="h-8 w-8 rounded-xl flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/[0.08] transition duration-150">
-            <i class="fa-solid fa-chevron-right text-xs"></i>
+          <button onclick="changeMonth(1)" title="Mois suivant" class="h-7 w-7 sm:h-8 sm:w-8 rounded-lg sm:rounded-xl flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/[0.08] transition duration-150">
+            <i class="fa-solid fa-chevron-right text-[11px] sm:text-xs"></i>
           </button>
         </div>
       </div>
 
       <!-- Days of Week Header -->
-      <div class="grid grid-cols-7 gap-2.5 mb-2.5 text-center text-xs font-semibold text-slate-400 tracking-wider">
-        <div class="py-1">Lun</div>
-        <div class="py-1">Mar</div>
-        <div class="py-1">Mer</div>
-        <div class="py-1">Jeu</div>
-        <div class="py-1">Ven</div>
-        <div class="py-1 text-blue-400">Sam</div>
-        <div class="py-1 text-blue-400">Dim</div>
+      <div class="grid grid-cols-7 gap-1 sm:gap-2 md:gap-2.5 mb-1.5 sm:mb-2.5 text-center text-[10px] sm:text-xs font-semibold text-slate-400 tracking-wider">
+        <div class="py-0.5 sm:py-1">Lun</div>
+        <div class="py-0.5 sm:py-1">Mar</div>
+        <div class="py-0.5 sm:py-1">Mer</div>
+        <div class="py-0.5 sm:py-1">Jeu</div>
+        <div class="py-0.5 sm:py-1">Ven</div>
+        <div class="py-0.5 sm:py-1 text-blue-400">Sam</div>
+        <div class="py-0.5 sm:py-1 text-blue-400">Dim</div>
       </div>
 
       <!-- Calendar Days Grid (Scrollable or Fitted) -->
-      <div id="calendar-days-grid" class="flex-1 grid grid-cols-7 gap-2.5 overflow-y-auto pr-0.5 select-none">
+      <div id="calendar-days-grid" class="flex-1 grid grid-cols-7 gap-1 sm:gap-2 md:gap-2.5 overflow-y-auto pr-0.5 select-none min-h-[300px]">
         <!-- Day cells dynamically rendered via JavaScript -->
       </div>
 
@@ -230,35 +255,35 @@
     <!-- ========================================== -->
     <!-- RIGHT PANEL: THE DAILY MANIFEST (5 cols)   -->
     <!-- ========================================== -->
-    <div class="lg:col-span-5 flex flex-col glass-panel rounded-3xl border border-white/[0.08] shadow-[0_20px_50px_rgba(0,0,0,0.4)] overflow-hidden">
+    <div class="lg:col-span-5 flex flex-col glass-panel rounded-2xl md:rounded-3xl border border-white/[0.08] shadow-[0_20px_50px_rgba(0,0,0,0.4)] overflow-hidden">
       
       <!-- Manifest Header -->
-      <div class="p-6 border-b border-white/[0.08] bg-white/[0.02] shrink-0">
-        <div class="flex items-start justify-between">
-          <div>
-            <div class="flex items-center space-x-2 text-[11px] font-semibold text-blue-400 uppercase tracking-wider mb-1.5">
+      <div class="p-3.5 sm:p-5 md:p-6 border-b border-white/[0.08] bg-white/[0.02] shrink-0">
+        <div class="flex items-start justify-between gap-2">
+          <div class="min-w-0">
+            <div class="flex items-center space-x-2 text-[10px] sm:text-[11px] font-semibold text-blue-400 uppercase tracking-wider mb-1">
               <i class="fa-regular fa-calendar-check"></i>
               <span>Manifeste Quotidien</span>
             </div>
-            <h3 id="manifest-date-title" class="text-lg font-semibold text-white tracking-tight">
+            <h3 id="manifest-date-title" class="text-base sm:text-lg font-semibold text-white tracking-tight truncate">
               <!-- Selected Date Formatted -->
             </h3>
           </div>
-          <span id="manifest-count-badge" class="px-3 py-1 text-xs font-semibold rounded-full bg-blue-500/15 text-blue-300 border border-blue-500/30">
+          <span id="manifest-count-badge" class="px-2.5 sm:px-3 py-1 text-[11px] sm:text-xs font-semibold rounded-full bg-blue-500/15 text-blue-300 border border-blue-500/30 shrink-0">
             0 Tournée
           </span>
         </div>
 
-        <!-- Route Completion Progress Ring (Apple-Style Gamification) -->
-        <div class="flex items-center gap-4 p-4 bg-slate-900/40 backdrop-blur-md border border-slate-700/50 rounded-2xl mb-4 mt-4">
+        <!-- Sticky Progress Ring Header (Mobile & Desktop) -->
+        <div class="w-full flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-slate-900/60 backdrop-blur-md border border-slate-700/50 rounded-2xl mb-3 sm:mb-4 mt-3 sm:mt-4 sticky top-2 z-30 shadow-lg shadow-black/20">
           <!-- SVG Progress Ring (60x60) -->
-          <div class="relative flex items-center justify-center shrink-0 w-[60px] h-[60px]">
-            <svg class="w-[60px] h-[60px] -rotate-90 transform" viewBox="0 0 60 60">
+          <div class="relative flex items-center justify-center shrink-0 w-[50px] h-[50px] sm:w-[60px] sm:h-[60px]">
+            <svg class="w-[50px] h-[50px] sm:w-[60px] sm:h-[60px] -rotate-90 transform" viewBox="0 0 60 60">
               <circle cx="30" cy="30" r="20" class="stroke-slate-800" stroke-width="4" fill="transparent"></circle>
               <circle id="progress-circle" cx="30" cy="30" r="20" class="stroke-blue-500 transition-[stroke-dashoffset] duration-700 ease-in-out" stroke-width="4" fill="transparent" stroke-linecap="round" stroke-dasharray="125.6" stroke-dashoffset="125.6"></circle>
             </svg>
             <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <i id="progress-ring-icon" class="fa-solid fa-flag-checkered text-xs text-slate-500 transition-colors duration-300"></i>
+              <i id="progress-ring-icon" class="fa-solid fa-flag-checkered text-[10px] sm:text-xs text-slate-500 transition-colors duration-300"></i>
             </div>
           </div>
           <!-- Text Info Block -->
@@ -274,24 +299,24 @@
         </div>
 
         <!-- Filter tabs as iOS Segmented Controls -->
-        <div class="flex items-center space-x-1 mt-4 p-1 rounded-2xl bg-black/40 border border-white/[0.06] text-xs font-medium">
-          <button onclick="setManifestFilter('ALL')" id="filter-all" class="flex-1 py-1.5 rounded-xl font-medium transition duration-200 bg-blue-600 text-white shadow-sm">
+        <div class="flex items-center space-x-1 mt-3 sm:mt-4 p-1 rounded-xl sm:rounded-2xl bg-black/40 border border-white/[0.06] text-[11px] sm:text-xs font-medium overflow-x-auto">
+          <button onclick="setManifestFilter('ALL')" id="filter-all" class="flex-1 py-1.5 px-2 rounded-lg sm:rounded-xl font-medium transition duration-200 bg-blue-600 text-white shadow-sm whitespace-nowrap">
             Tous (<span id="count-all">0</span>)
           </button>
-          <button onclick="setManifestFilter('In Transit')" id="filter-transit" class="flex-1 py-1.5 rounded-xl font-medium text-slate-400 hover:text-slate-200 hover:bg-white/[0.06] transition duration-200">
+          <button onclick="setManifestFilter('In Transit')" id="filter-transit" class="flex-1 py-1.5 px-2 rounded-lg sm:rounded-xl font-medium text-slate-400 hover:text-slate-200 hover:bg-white/[0.06] transition duration-200 whitespace-nowrap">
             En Transit (<span id="count-transit">0</span>)
           </button>
-          <button onclick="setManifestFilter('Delivered')" id="filter-delivered" class="flex-1 py-1.5 rounded-xl font-medium text-slate-400 hover:text-slate-200 hover:bg-white/[0.06] transition duration-200">
+          <button onclick="setManifestFilter('Delivered')" id="filter-delivered" class="flex-1 py-1.5 px-2 rounded-lg sm:rounded-xl font-medium text-slate-400 hover:text-slate-200 hover:bg-white/[0.06] transition duration-200 whitespace-nowrap">
             Livrés (<span id="count-delivered">0</span>)
           </button>
-          <button onclick="setManifestFilter('Scheduled')" id="filter-scheduled" class="flex-1 py-1.5 rounded-xl font-medium text-slate-400 hover:text-slate-200 hover:bg-white/[0.06] transition duration-200">
+          <button onclick="setManifestFilter('Scheduled')" id="filter-scheduled" class="flex-1 py-1.5 px-2 rounded-lg sm:rounded-xl font-medium text-slate-400 hover:text-slate-200 hover:bg-white/[0.06] transition duration-200 whitespace-nowrap">
             Prévus (<span id="count-scheduled">0</span>)
           </button>
         </div>
       </div>
 
-      <!-- Manifest Content Body (Scrollable) -->
-      <div id="manifest-cards-container" class="flex-1 overflow-y-auto p-5 space-y-3.5">
+      <!-- Manifest Content Body (Dedicated Vertical Scroll) -->
+      <div id="manifest-cards-container" class="flex-1 overflow-y-auto p-3 sm:p-5 space-y-3 sm:space-y-3.5 max-h-[500px] lg:max-h-none">
         <!-- Delivery cards or Empty State rendered dynamically -->
       </div>
 
@@ -311,8 +336,8 @@
   </div>
 
   <!-- DELIVERY DETAILS MODAL (macOS Sheet Style) -->
-  <div id="detail-modal" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-md hidden flex items-center justify-center p-4">
-    <div class="glass-panel border border-white/[0.12] rounded-3xl w-full max-w-lg shadow-[0_25px_60px_rgba(0,0,0,0.6)] overflow-hidden transform transition-all">
+  <div id="detail-modal" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-4">
+    <div class="glass-panel border border-white/[0.12] rounded-2xl sm:rounded-3xl w-full max-w-lg shadow-[0_25px_60px_rgba(0,0,0,0.6)] overflow-hidden transform transition-all max-h-[90vh] flex flex-col">
       <div class="px-6 py-4.5 border-b border-white/[0.08] flex items-center justify-between bg-white/[0.03]">
         <div class="flex items-center space-x-3">
           <div class="p-2.5 rounded-2xl bg-blue-500/15 text-blue-400 border border-blue-500/30">
@@ -14296,7 +14321,7 @@
       for (let i = startingDay - 1; i >= 0; i--) {
         const prevDayNum = daysInPrevMonth - i;
         const cell = document.createElement("div");
-        cell.className = "h-20 md:h-24 p-1.5 rounded-xl border border-slate-900 bg-slate-950/40 text-slate-600 flex flex-col justify-between opacity-40 cursor-not-allowed";
+        cell.className = "min-h-[44px] h-12 sm:h-20 md:h-24 p-1 sm:p-1.5 rounded-lg sm:rounded-xl border border-slate-900 bg-slate-950/40 text-slate-600 flex flex-col justify-between opacity-40 cursor-not-allowed";
         cell.innerHTML = `<span class="text-xs font-semibold">${prevDayNum}</span>`;
         grid.appendChild(cell);
       }
@@ -14327,7 +14352,7 @@
         cell.onclick = () => selectDate(dStr);
 
         // Styling based on state
-        let baseClasses = "h-20 md:h-24 p-2 rounded-xl border transition-all duration-200 cursor-pointer flex flex-col justify-between relative group ";
+        let baseClasses = "min-h-[44px] h-14 sm:h-20 md:h-24 p-1 sm:p-1.5 md:p-2 rounded-lg sm:rounded-xl border transition-all duration-200 cursor-pointer flex flex-col justify-between relative group ";
         
         if (isSelected) {
           baseClasses += "glass-card ring-2 ring-indigo-500 bg-indigo-600/25 border-indigo-500/80 shadow-lg shadow-indigo-500/20 ";
@@ -14344,7 +14369,7 @@
           const hasTransit = dayDeliveries.some(d => d.status === "In Transit");
           const hasScheduled = dayDeliveries.some(d => d.status === "Scheduled");
 
-          statusDots = '<div class="flex items-center space-x-1 mt-1">';
+          statusDots = '<div class="flex items-center space-x-0.5 sm:space-x-1 mt-0.5 sm:mt-1">';
           if (hasDelivered) statusDots += '<span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>';
           if (hasTransit) statusDots += '<span class="h-1.5 w-1.5 rounded-full bg-amber-400 animate-pulse"></span>';
           if (hasScheduled) statusDots += '<span class="h-1.5 w-1.5 rounded-full bg-indigo-400"></span>';
@@ -14365,9 +14390,9 @@
           ${hasDeliveries ? `
             <div class="mt-auto">
               ${statusDots}
-              <div class="mt-1 px-1.5 py-0.5 rounded-md bg-indigo-500/20 border border-indigo-500/30 text-[10px] font-semibold text-indigo-300 flex items-center justify-between">
-                <span>${dayDeliveries.length} livr.</span>
-                <span class="font-bold text-white text-[9px]">${dayUnits.toLocaleString()}</span>
+              <div class="mt-0.5 sm:mt-1 px-1 py-0.5 rounded sm:rounded-md bg-indigo-500/20 border border-indigo-500/30 text-[9px] sm:text-[10px] font-semibold text-indigo-300 flex items-center justify-center sm:justify-between truncate">
+                <span class="font-bold">${dayDeliveries.length}<span class="hidden sm:inline"> livr.</span></span>
+                <span class="hidden sm:inline font-bold text-white text-[9px]">${dayUnits.toLocaleString()}</span>
               </div>
             </div>
           ` : `
@@ -14385,7 +14410,7 @@
       const remainingCells = (totalRenderedDays % 7 === 0) ? 0 : 7 - (totalRenderedDays % 7);
       for (let i = 1; i <= remainingCells; i++) {
         const cell = document.createElement("div");
-        cell.className = "h-20 md:h-24 p-1.5 rounded-xl border border-slate-900 bg-slate-950/40 text-slate-600 flex flex-col justify-between opacity-40 cursor-not-allowed";
+        cell.className = "min-h-[44px] h-12 sm:h-20 md:h-24 p-1 sm:p-1.5 rounded-lg sm:rounded-xl border border-slate-900 bg-slate-950/40 text-slate-600 flex flex-col justify-between opacity-40 cursor-not-allowed";
         cell.innerHTML = `<span class="text-xs font-semibold">${i}</span>`;
         grid.appendChild(cell);
       }
@@ -14531,14 +14556,14 @@
 
         card.innerHTML = `
           <!-- Card Header -->
-          <div class="flex items-center justify-between pb-3 border-b border-slate-700/40">
-            <div class="flex items-center space-x-2">
-              <span class="h-6 w-6 rounded-lg bg-slate-800 text-slate-300 text-xs font-bold flex items-center justify-center border border-slate-700">
+          <div class="flex items-center justify-between pb-2.5 sm:pb-3 border-b border-slate-700/40 gap-2">
+            <div class="flex items-center space-x-2 min-w-0">
+              <span class="h-6 w-6 rounded-lg bg-slate-800 text-slate-300 text-xs font-bold flex items-center justify-center border border-slate-700 shrink-0">
                 P${item.priority}
               </span>
-              <span class="text-xs font-semibold text-slate-400 font-mono">${item.id}</span>
+              <span class="text-xs font-semibold text-slate-400 font-mono truncate">${item.id}</span>
             </div>
-            <div class="flex items-center gap-2.5">
+            <div class="flex items-center gap-2 shrink-0">
               ${statusBadge}
               <button data-id="${item.id}" class="${btnClass}" title="${isCompleted ? 'Livraison complétée (cliquez pour annuler)' : 'Marquer comme livré'}">
                 <i class="fa-solid fa-check"></i>
@@ -14547,16 +14572,16 @@
           </div>
 
           <!-- Destination & Route -->
-          <div class="mt-3">
-            <h4 class="text-sm font-bold text-white tracking-tight flex items-center gap-1.5">
-              <i class="fa-solid fa-location-dot text-indigo-400 text-xs"></i>
-              <span>${item.destination}</span>
+          <div class="mt-2.5 sm:mt-3">
+            <h4 class="text-xs sm:text-sm font-bold text-white tracking-tight flex items-start gap-1.5 break-words">
+              <i class="fa-solid fa-location-dot text-indigo-400 text-xs mt-0.5 shrink-0"></i>
+              <span class="break-words">${item.destination}</span>
             </h4>
-            <div class="flex items-center gap-2 mt-1">
-              <span class="px-2 py-0.5 rounded-md bg-slate-800 text-[10px] text-slate-300 font-medium">
+            <div class="flex flex-wrap items-center gap-1.5 sm:gap-2 mt-1.5">
+              <span class="px-2 py-0.5 rounded-md bg-slate-800 text-[10px] text-slate-300 font-medium truncate max-w-[170px]">
                 ${item.wilaya} (${item.region})
               </span>
-              <span class="px-2 py-0.5 rounded-md bg-indigo-950/60 text-[10px] text-indigo-300 font-semibold border border-indigo-800/40">
+              <span class="px-2 py-0.5 rounded-md bg-indigo-950/60 text-[10px] text-indigo-300 font-semibold border border-indigo-800/40 truncate max-w-[140px]">
                 ${item.brand}
               </span>
             </div>
