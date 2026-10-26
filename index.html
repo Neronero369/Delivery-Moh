@@ -174,7 +174,7 @@
           </div>
         </div>
 
-        <button onclick="goToToday()" class="flex items-center space-x-2 bg-blue-600 hover:bg-blue-500 text-white font-medium px-4 py-2 rounded-2xl transition shadow-lg shadow-blue-600/25 active:scale-95 duration-200">
+        <button onclick="goToToday()" class="flex items-center space-x-2 bg-blue-600 hover:bg-blue-500 text-white font-medium px-4 py-2 rounded-2xl transition-all duration-200 shadow-lg shadow-blue-600/25 active:scale-95 outline-none select-none border-2 border-transparent focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-[#0b0d11]">
           <i class="fa-solid fa-calendar-day text-xs"></i>
           <span>Aujourd'hui</span>
         </button>
@@ -182,7 +182,7 @@
 
       <!-- Quick Action Mobile (Aujourd'hui) -->
       <div class="flex md:hidden items-center space-x-2">
-        <button onclick="goToToday()" class="flex items-center space-x-1.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-medium px-3 py-1.5 rounded-xl transition shadow-md shadow-blue-600/25 active:scale-95">
+        <button onclick="goToToday()" class="flex items-center space-x-1.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-medium px-3 py-1.5 rounded-xl transition-all duration-200 shadow-md shadow-blue-600/25 active:scale-95 outline-none select-none border-2 border-transparent focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 focus:ring-offset-[#0b0d11]">
           <i class="fa-solid fa-calendar-day text-[11px]"></i>
           <span>Aujourd'hui</span>
         </button>
@@ -210,13 +210,13 @@
 
         <!-- Month Navigation Arrows (iOS Segmented Controls) -->
         <div class="flex items-center space-x-1 bg-white/[0.04] p-1 sm:p-1.5 rounded-xl sm:rounded-2xl border border-white/[0.08] backdrop-blur-xl shrink-0">
-          <button onclick="changeMonth(-1)" title="Mois précédent" class="h-7 w-7 sm:h-8 sm:w-8 rounded-lg sm:rounded-xl flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/[0.08] transition duration-150">
+          <button onclick="changeMonth(-1)" title="Mois précédent" class="h-7 w-7 sm:h-8 sm:w-8 flex-shrink-0 rounded-lg sm:rounded-xl flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/[0.08] transition-all duration-150 active:scale-95 outline-none select-none border border-transparent focus:ring-1 focus:ring-white/20">
             <i class="fa-solid fa-chevron-left text-[11px] sm:text-xs"></i>
           </button>
-          <button onclick="goToToday()" class="px-2 sm:px-3 py-1 sm:py-1.5 text-[11px] sm:text-xs font-semibold text-slate-300 hover:text-white hover:bg-white/[0.08] rounded-lg sm:rounded-xl transition duration-150">
+          <button onclick="goToToday()" class="px-2 sm:px-3 py-1 sm:py-1.5 text-[11px] sm:text-xs font-semibold text-slate-300 hover:text-white hover:bg-white/[0.08] rounded-lg sm:rounded-xl transition-all duration-150 active:scale-95 outline-none select-none border border-transparent focus:ring-1 focus:ring-white/20">
             Ce mois
           </button>
-          <button onclick="changeMonth(1)" title="Mois suivant" class="h-7 w-7 sm:h-8 sm:w-8 rounded-lg sm:rounded-xl flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/[0.08] transition duration-150">
+          <button onclick="changeMonth(1)" title="Mois suivant" class="h-7 w-7 sm:h-8 sm:w-8 flex-shrink-0 rounded-lg sm:rounded-xl flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/[0.08] transition-all duration-150 active:scale-95 outline-none select-none border border-transparent focus:ring-1 focus:ring-white/20">
             <i class="fa-solid fa-chevron-right text-[11px] sm:text-xs"></i>
           </button>
         </div>
@@ -298,20 +298,20 @@
           </div>
         </div>
 
-        <!-- Filter tabs as iOS Segmented Controls -->
-        <div class="flex items-center space-x-1 mt-3 sm:mt-4 p-1 rounded-xl sm:rounded-2xl bg-black/40 border border-white/[0.06] text-[11px] sm:text-xs font-medium overflow-x-auto">
-          <button onclick="setManifestFilter('ALL')" id="filter-all" class="flex-1 py-1.5 px-2 rounded-lg sm:rounded-xl font-medium transition duration-200 bg-blue-600 text-white shadow-sm whitespace-nowrap">
+        <!-- Filter tabs as Strict Grid (Locked Dimensions) -->
+        <div class="grid grid-cols-3 gap-2 w-full mt-3 sm:mt-4 p-1 rounded-xl sm:rounded-2xl bg-black/40 border border-white/[0.06] text-xs sm:text-sm font-medium">
+          <button onclick="setManifestFilter('ALL')" id="filter-all" class="w-full flex items-center justify-center py-2 px-1 rounded-lg sm:rounded-xl text-xs sm:text-sm font-medium transition duration-200 bg-blue-600 text-white shadow-sm outline-none select-none active:scale-95">
             Tous (<span id="count-all">0</span>)
           </button>
-          <button onclick="setManifestFilter('In Transit')" id="filter-transit" class="flex-1 py-1.5 px-2 rounded-lg sm:rounded-xl font-medium text-slate-400 hover:text-slate-200 hover:bg-white/[0.06] transition duration-200 whitespace-nowrap">
-            En Transit (<span id="count-transit">0</span>)
+          <button onclick="setManifestFilter('Delivered')" id="filter-delivered" class="w-full flex items-center justify-center py-2 px-1 rounded-lg sm:rounded-xl text-xs sm:text-sm font-medium transition duration-200 text-slate-400 hover:text-slate-200 hover:bg-white/[0.06] outline-none select-none active:scale-95">
+            Livré (<span id="count-delivered">0</span>)
           </button>
-          <button onclick="setManifestFilter('Delivered')" id="filter-delivered" class="flex-1 py-1.5 px-2 rounded-lg sm:rounded-xl font-medium text-slate-400 hover:text-slate-200 hover:bg-white/[0.06] transition duration-200 whitespace-nowrap">
-            Livrés (<span id="count-delivered">0</span>)
+          <button onclick="setManifestFilter('PENDING')" id="filter-pending" class="w-full flex items-center justify-center py-2 px-1 rounded-lg sm:rounded-xl text-xs sm:text-sm font-medium transition duration-200 text-slate-400 hover:text-slate-200 hover:bg-white/[0.06] outline-none select-none active:scale-95">
+            Non Livré (<span id="count-pending">0</span>)
           </button>
-          <button onclick="setManifestFilter('Scheduled')" id="filter-scheduled" class="flex-1 py-1.5 px-2 rounded-lg sm:rounded-xl font-medium text-slate-400 hover:text-slate-200 hover:bg-white/[0.06] transition duration-200 whitespace-nowrap">
-            Prévus (<span id="count-scheduled">0</span>)
-          </button>
+          <!-- Hidden count hooks for compatibility -->
+          <span id="count-transit" class="hidden">0</span>
+          <span id="count-scheduled" class="hidden">0</span>
         </div>
       </div>
 
@@ -348,7 +348,7 @@
             <p class="text-xs text-slate-400 font-medium" id="modal-route-sub"></p>
           </div>
         </div>
-        <button onclick="closeModal()" class="text-slate-400 hover:text-white p-2 rounded-xl hover:bg-white/[0.08] transition duration-150">
+        <button onclick="closeModal()" class="w-8 h-8 flex-shrink-0 flex items-center justify-center text-slate-400 hover:text-white rounded-xl hover:bg-white/[0.08] transition-all duration-150 active:scale-95 outline-none select-none border border-transparent focus:ring-1 focus:ring-white/20">
           <i class="fa-solid fa-xmark text-sm"></i>
         </button>
       </div>
@@ -356,7 +356,7 @@
         <!-- Content injected dynamically -->
       </div>
       <div class="px-6 py-4 border-t border-white/[0.08] bg-white/[0.02] flex justify-end">
-        <button onclick="closeModal()" class="px-5 py-2.5 bg-white/[0.08] hover:bg-white/[0.12] text-white font-medium rounded-2xl transition duration-150">
+        <button onclick="closeModal()" class="px-5 py-2.5 bg-white/[0.08] hover:bg-white/[0.12] text-white font-medium rounded-2xl transition-all duration-150 active:scale-95 outline-none select-none border border-transparent focus:ring-2 focus:ring-white/20">
           Fermer
         </button>
       </div>
@@ -14443,11 +14443,18 @@
       const transitCount = dayDeliveries.filter(x => x.status === "In Transit").length;
       const deliveredCount = dayDeliveries.filter(x => x.status === "Delivered").length;
       const scheduledCount = dayDeliveries.filter(x => x.status === "Scheduled").length;
+      const pendingCount = dayDeliveries.filter(x => x.status !== "Delivered").length;
 
-      document.getElementById("count-all").textContent = dayDeliveries.length;
-      document.getElementById("count-transit").textContent = transitCount;
-      document.getElementById("count-delivered").textContent = deliveredCount;
-      document.getElementById("count-scheduled").textContent = scheduledCount;
+      const elAll = document.getElementById("count-all");
+      if (elAll) elAll.textContent = dayDeliveries.length;
+      const elDelivered = document.getElementById("count-delivered");
+      if (elDelivered) elDelivered.textContent = deliveredCount;
+      const elPending = document.getElementById("count-pending");
+      if (elPending) elPending.textContent = pendingCount;
+      const elTransit = document.getElementById("count-transit");
+      if (elTransit) elTransit.textContent = transitCount;
+      const elScheduled = document.getElementById("count-scheduled");
+      if (elScheduled) elScheduled.textContent = scheduledCount;
       
       document.getElementById("manifest-count-badge").textContent = 
         `${dayDeliveries.length} Tournée${dayDeliveries.length > 1 ? 's' : ''}`;
@@ -14488,7 +14495,9 @@
       // Apply Status Filter
       const filtered = activeManifestFilter === "ALL" 
         ? dayDeliveries 
-        : dayDeliveries.filter(x => x.status === activeManifestFilter);
+        : (activeManifestFilter === "PENDING" || activeManifestFilter === "Non Livré"
+            ? dayDeliveries.filter(x => x.status !== "Delivered")
+            : dayDeliveries.filter(x => x.status === activeManifestFilter));
 
       // Update footer volume
       const totalUnits = dayDeliveries.reduce((sum, item) => sum + item.quantity, 0);
@@ -14509,7 +14518,7 @@
                   : 'Aucun ordre de transfert ou rotation de camion n\'est prévu pour ce jour.'}
               </p>
             </div>
-            <button onclick="jumpToNextDelivery()" class="text-xs font-semibold text-indigo-400 hover:text-indigo-300 flex items-center gap-1.5 transition">
+            <button onclick="jumpToNextDelivery()" class="text-xs font-semibold text-indigo-400 hover:text-indigo-300 flex items-center gap-1.5 transition-all duration-150 active:scale-95 outline-none select-none px-3 py-1.5 rounded-lg border border-transparent hover:border-indigo-500/30 hover:bg-indigo-500/[0.08]">
               <span>Voir la prochaine livraison</span>
               <i class="fa-solid fa-arrow-right text-[10px]"></i>
             </button>
@@ -14551,8 +14560,8 @@
         }
 
         const btnClass = isCompleted 
-          ? "btn-complete-toggle flex items-center justify-center w-10 h-10 rounded-full bg-blue-500 text-white border border-blue-500 shadow-lg shadow-blue-500/30 transition-all duration-300 shrink-0"
-          : "btn-complete-toggle flex items-center justify-center w-10 h-10 rounded-full bg-slate-800 border border-slate-700 text-slate-400 hover:text-blue-500 hover:border-blue-500 transition-all duration-300 shrink-0";
+          ? "btn-complete-toggle flex items-center justify-center w-10 h-10 flex-shrink-0 rounded-full bg-blue-500 text-white border-2 border-blue-500 shadow-lg shadow-blue-500/30 transition-all duration-300 outline-none select-none active:scale-95"
+          : "btn-complete-toggle flex items-center justify-center w-10 h-10 flex-shrink-0 rounded-full bg-slate-800 border-2 border-slate-700 text-slate-400 hover:text-blue-400 hover:border-blue-500/70 transition-all duration-300 outline-none select-none active:scale-95";
 
         card.innerHTML = `
           <!-- Card Header -->
@@ -14621,7 +14630,7 @@
               <i class="fa-regular fa-clock text-[10px]"></i>
               ${item.time}
             </span>
-            <button onclick="viewRouteDetail('${item.id}')" class="text-indigo-400 hover:text-indigo-300 font-semibold flex items-center gap-1 transition">
+            <button onclick="viewRouteDetail('${item.id}')" class="text-indigo-400 hover:text-indigo-300 font-semibold flex items-center gap-1 transition-all duration-150 active:scale-95 outline-none select-none px-2 py-1 rounded-lg border border-transparent hover:border-indigo-500/30 hover:bg-indigo-500/[0.08]">
               <span>Feuille de Route</span>
               <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
             </button>
@@ -14641,7 +14650,7 @@
 
           if (!isCompleted) {
             // Toggle completed state on button
-            btn.classList.remove("bg-slate-800", "border-slate-700", "text-slate-400");
+            btn.classList.remove("bg-slate-800", "border-slate-700", "text-slate-400", "hover:text-blue-400", "hover:border-blue-500/70");
             btn.classList.add("bg-blue-500", "text-white", "border-blue-500", "shadow-lg", "shadow-blue-500/30");
             // Toggle faded/dimmed state on parent card
             if (parentCard) {
@@ -14691,15 +14700,20 @@
     function setManifestFilter(status) {
       activeManifestFilter = status;
       
-      // Update UI button tabs
-      const filters = ['ALL', 'In Transit', 'Delivered', 'Scheduled'];
+      // Update UI button tabs (Locked Dimensions)
+      const filters = [
+        { id: 'filter-all', key: 'ALL' },
+        { id: 'filter-delivered', key: 'Delivered' },
+        { id: 'filter-pending', key: 'PENDING' }
+      ];
       filters.forEach(f => {
-        const btnId = f === 'ALL' ? 'filter-all' : (f === 'In Transit' ? 'filter-transit' : (f === 'Delivered' ? 'filter-delivered' : 'filter-scheduled'));
-        const btn = document.getElementById(btnId);
-        if (f === status) {
-          btn.className = "px-3 py-1 rounded-lg font-medium transition bg-indigo-600 text-white shadow-sm";
-        } else {
-          btn.className = "px-3 py-1 rounded-lg font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-800 transition";
+        const btn = document.getElementById(f.id);
+        if (btn) {
+          if (f.key === status) {
+            btn.className = "w-full flex items-center justify-center py-2 px-1 rounded-lg sm:rounded-xl text-xs sm:text-sm font-medium transition duration-200 bg-blue-600 text-white shadow-sm outline-none select-none active:scale-95";
+          } else {
+            btn.className = "w-full flex items-center justify-center py-2 px-1 rounded-lg sm:rounded-xl text-xs sm:text-sm font-medium transition duration-200 text-slate-400 hover:text-slate-200 hover:bg-white/[0.06] outline-none select-none active:scale-95";
+          }
         }
       });
 
