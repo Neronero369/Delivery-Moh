@@ -994,11 +994,11 @@ def update_calendar_app(db_data, index_path=None):
 
             # Compute Status
             if deliv_date < today_str:
-                status = "Delivered"
+                status = "non_livre"
             elif deliv_date == today_str:
-                status = "In Transit"
+                status = "non_livre"
             else:
-                status = "Scheduled"
+                status = "non_livre"
 
             driver = d.get("driver") or "Non spécifié"
             vehicle = d.get("vehicle") or "Camion Porteur"
@@ -1024,7 +1024,8 @@ def update_calendar_app(db_data, index_path=None):
                 "region": d.get("region") or "Centre",
                 "quantity": qty,
                 "colis": max(1, int(round(qty / 20))) if qty > 0 else 1,
-                "status": status,
+                "status": "non_livre",
+                "completed": False,
                 "priority": prio,
                 "time": time_str,
                 "notes": notes,
